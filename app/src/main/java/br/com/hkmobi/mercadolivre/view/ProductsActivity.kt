@@ -1,6 +1,7 @@
-package br.com.hkmobi.mercadolivre
+package br.com.hkmobi.mercadolivre.view
 
 import android.os.Bundle
+import br.com.hkmobi.mercadolivre.R
 import br.com.hkmobi.mercadolivre.utils.BaseActivity
 
 class ProductsActivity : BaseActivity() {
