@@ -1,4 +1,4 @@
-package br.com.hkmobi.mercadolivre.view
+package br.com.hkmobi.mercadolivre.view.detailProduct
 
 import android.content.Context
 import android.content.Intent
@@ -17,7 +17,7 @@ class DetailProductActivity : BaseActivity() {
     lateinit var product: Product
 
     companion object {
-        const val PRODUCT = "br.com.hkmobi.mercadolivre.view.DetailProductActivity.PRODUCT"
+        const val PRODUCT = "br.com.hkmobi.mercadolivre.view.detailProduct.DetailProductActivity.PRODUCT"
     }
 
     fun startActivity(context: Context, product: Product){

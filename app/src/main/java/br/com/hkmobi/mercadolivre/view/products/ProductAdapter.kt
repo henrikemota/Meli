@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.hkmobi.mercadolivre.R
 import br.com.hkmobi.mercadolivre.model.Product
-import br.com.hkmobi.mercadolivre.view.DetailProductActivity
+import br.com.hkmobi.mercadolivre.view.detailProduct.DetailProductActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_product.view.*
-import java.text.NumberFormat
-import java.util.*
 
 
 class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
@@ -33,12 +31,13 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val product = products[position]
         holder.titleProduct.text = product.title
-        if(!product.thumbnail.isNullOrEmpty()) Picasso.get().load(product.thumbnail).into(holder.imageProduct)
+        if(product.thumbnail.isNotEmpty()) Picasso.get().load(product.thumbnail).into(holder.imageProduct)
         holder.evaluation.rating = product.reviews.rating_average.toFloat()
         holder.evaluationTotal.text = context.getString(R.string.msg_evaluation, product.reviews.total)
         holder.productPrice.text = product.priceFormatted()
 
-        holder.itemView.setOnClickListener { DetailProductActivity().startActivity(context, product) }
+        holder.itemView.setOnClickListener { DetailProductActivity()
+            .startActivity(context, product) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

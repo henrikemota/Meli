@@ -1,6 +1,5 @@
 package br.com.hkmobi.mercadolivre.viewmodel
 
-import android.util.Property
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import br.com.hkmobi.mercadolivre.model.Product
@@ -20,6 +19,7 @@ class ProductsViewModel: ViewModel() {
     private val mutableLiveDataProductsError = MutableLiveData<String>()
     private val mutableLiveDataProductsProgress = MutableLiveData<Boolean>()
     private val mutableLiveDataCountProducts = MutableLiveData<Int>()
+    private val mutableLiveDataQuery = MutableLiveData<String>()
 
     fun getProducts(): LiveData<List<Product>> {
         return mutableLiveDataProducts
@@ -35,6 +35,14 @@ class ProductsViewModel: ViewModel() {
 
     fun countProducts(): LiveData<Int> {
         return mutableLiveDataCountProducts
+    }
+
+    fun getQuery(): LiveData<String> {
+        return mutableLiveDataQuery
+    }
+
+    fun setQuery(query: String) {
+        return mutableLiveDataQuery.postValue(query)
     }
 
     fun getProducts(query: String, page: Int){
@@ -56,7 +64,11 @@ class ProductsViewModel: ViewModel() {
                 override fun onSuccess(response: ResponseProduct) {
                     mutableLiveDataProductsProgress.postValue(false)
                     mutableLiveDataProducts.postValue(response.results)
-                    if(!response.results.isNullOrEmpty()) mutableLiveDataCountProducts.postValue(response.paging.total)
+                    if(!response.results.isNullOrEmpty()){
+                        mutableLiveDataCountProducts.postValue(response.paging.total)
+                    }else{
+                        mutableLiveDataCountProducts.postValue(0)
+                    }
                 }
             })
     }
