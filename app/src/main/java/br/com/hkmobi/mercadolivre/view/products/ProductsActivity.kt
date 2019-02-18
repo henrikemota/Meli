@@ -58,9 +58,8 @@ class ProductsActivity : BaseActivity() {
     @SuppressLint("StringFormatMatches")
     private fun setValues() {
         productViewModel.getProducts().observe(this, Observer { products ->
-            if(products.isEmpty()) this.products.clear()
-            else this.products.addAll(products)
-
+            this.products.clear()
+            this.products.addAll(products)
             productAdapter.notifyDataSetChanged()
             animationSearch.cancelAnimation()
             animationSearch.visibility = View.GONE
@@ -81,7 +80,6 @@ class ProductsActivity : BaseActivity() {
 
     private fun getProducts(){
         animationSearch.visibility = View.GONE
-        productViewModel.setProducts(ArrayList())
         productViewModel.getProducts(query)
     }
 

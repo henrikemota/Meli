@@ -34,7 +34,8 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
         if(product.thumbnail.isNotEmpty()) Picasso.get().load(product.thumbnail).into(holder.imageProduct)
         holder.evaluation.rating = product.reviews.rating_average.toFloat()
         holder.evaluationTotal.text = context.getString(R.string.msg_evaluation, product.reviews.total)
-        holder.productPrice.text = product.priceFormatted()
+        holder.productPrice.text = product.priceFormatted(product.price)
+        holder.productInstallment.text = context.getString(R.string.msg_installment, product.installments.quantity, product.priceFormatted(product.installments.amount))
 
         holder.itemView.setOnClickListener { DetailProductActivity()
             .startActivity(context, product) }
@@ -46,6 +47,7 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
         val evaluation = itemView.evaluation!!
         val evaluationTotal = itemView.evaluationTotal!!
         val productPrice = itemView.productPrice!!
+        val productInstallment = itemView.productInstallment!!
 
     }
 }

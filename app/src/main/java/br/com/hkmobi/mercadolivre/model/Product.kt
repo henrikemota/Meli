@@ -9,10 +9,10 @@ data class Product(val id: String,
                    val thumbnail: String,
                    val reviews: Review,
                    val price: Double,
-                   val currency_id: String): Serializable{
+                   val currency_id: String,
+                   val installments: Installment): Serializable{
 
-
-    fun priceFormatted(): String{
+    fun priceFormatted(price: Double): String{
         val format = NumberFormat.getCurrencyInstance(Locale.getDefault())
         format.currency = Currency.getInstance(currency_id)
         return format.format(price)

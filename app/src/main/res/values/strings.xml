@@ -1,14 +1,11 @@
 <resources>
-    <string name="app_name">Mercado Livre</string>
+    <string name="app_name">Mvvm</string>
     <string name="hint_search_products">Buscar produtos…</string>
-    <string name="msg_product_total">
-        <b>%s</b>
-        produtos encontrado
-    </string>
-    <string name="title_activity_detail_product">DetailProductActivity</string>
+    <string name="title_activity_detail_product">Detalhes</string>
     <string name="large_text">"Material is the metaphor.\n\n"</string>
     <string name="action_settings">Settings</string>
     <string name="msg_evaluation">%s opiniões</string>
     <string name="msg_search">Buscar</string>
     <string name="hint_search">Busque o mundo…</string>
+    <string name="msg_installment">%s vezes de %s</string>
 </resources>
