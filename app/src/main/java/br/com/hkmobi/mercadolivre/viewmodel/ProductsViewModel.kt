@@ -15,17 +15,16 @@ import io.reactivex.schedulers.Schedulers
 
 class ProductsViewModel: ViewModel() {
 
-    private val mutableLiveDataProducts = MutableLiveData<List<Product>>()
+    private val mutableLiveDataProducts = MutableLiveData<ArrayList<Product>>()
     private val mutableLiveDataProductsError = MutableLiveData<String>()
     private val mutableLiveDataProductsProgress = MutableLiveData<Boolean>()
-    private val mutableLiveDataCountProducts = MutableLiveData<Int>()
     private val mutableLiveDataQuery = MutableLiveData<String>()
 
-    fun getProducts(): LiveData<List<Product>> {
+    fun getProducts(): LiveData<ArrayList<Product>> {
         return mutableLiveDataProducts
     }
 
-    fun setProducts(products: List<Product>){
+    fun setProducts(products: ArrayList<Product>){
         mutableLiveDataProducts.postValue(products)
     }
 
@@ -37,10 +36,6 @@ class ProductsViewModel: ViewModel() {
         return mutableLiveDataProductsProgress
     }
 
-    fun countProducts(): LiveData<Int> {
-        return mutableLiveDataCountProducts
-    }
-
     fun getQuery(): LiveData<String> {
         return mutableLiveDataQuery
     }
@@ -49,10 +44,10 @@ class ProductsViewModel: ViewModel() {
         return mutableLiveDataQuery.postValue(query)
     }
 
-    fun getProducts(query: String, page: Int){
+    fun getProducts(query: String){
         ServiceGenerator
             .createService(MeliInterface::class.java)
-            .getProducts(query, page, Constants.LIMIT)
+            .getProducts(query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<ResponseProduct> {
@@ -68,11 +63,7 @@ class ProductsViewModel: ViewModel() {
                 override fun onSuccess(response: ResponseProduct) {
                     mutableLiveDataProductsProgress.postValue(false)
                     setProducts(response.results)
-                    if(!response.results.isNullOrEmpty()){
-                        mutableLiveDataCountProducts.postValue(response.paging.total)
-                    }else{
-                        mutableLiveDataCountProducts.postValue(0)
-                    }
+
                 }
             })
     }

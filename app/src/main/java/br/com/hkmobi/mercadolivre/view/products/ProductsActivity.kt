@@ -27,12 +27,7 @@ class ProductsActivity : BaseActivity() {
     lateinit var productAdapter: ProductAdapter
     lateinit var layoutManager: LinearLayoutManager
 
-    var page = 0
     var query = ""
-    private var loading = false
-    private var lastVisibleItem = 0
-    private var totalItemCount = 0
-    private var totalItems = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +35,7 @@ class ProductsActivity : BaseActivity() {
 
         setAdapter()
         setValues()
+        setListener()
     }
 
     private fun setAdapter(){
@@ -49,40 +45,22 @@ class ProductsActivity : BaseActivity() {
         productAdapter = ProductAdapter(products)
         recyclerView.adapter = productAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, (recyclerView.layoutManager as LinearLayoutManager).orientation))
-        setUpLoadMoreListener()
     }
 
-    private fun setUpLoadMoreListener() {
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                totalItemCount = layoutManager.itemCount
-                lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                if (!loading && totalItemCount <= lastVisibleItem + 1 && totalItemCount < totalItems) {
-                    if(page != 0){
-                        getProducts()
-                        loading = true
-                    }
-                }
-            }
-        })
-    }
-
-    @SuppressLint("StringFormatMatches")
-    private fun setValues() {
-
+    private fun setListener(){
         swipeRefreshLayout.setOnRefreshListener {
-            page = 0
             getProducts()
         }
 
         animationSearch.setOnClickListener { searchView.isIconified = false }
+    }
 
+    @SuppressLint("StringFormatMatches")
+    private fun setValues() {
         productViewModel.getProducts().observe(this, Observer { products ->
-            this.products.addAll(products)
-            loading = false
-            page++
+            if(products.isEmpty()) this.products.clear()
+            else this.products.addAll(products)
+
             productAdapter.notifyDataSetChanged()
             animationSearch.cancelAnimation()
             animationSearch.visibility = View.GONE
@@ -99,17 +77,12 @@ class ProductsActivity : BaseActivity() {
         productViewModel.statusProgress().observe(this, Observer { status ->
             progressBar.visibility = ViewHelper().show(status)
         })
-
-        productViewModel.countProducts().observe(this, Observer { total ->
-            totalItems = total
-            productTotal.text = getString(R.string.msg_product_total, totalItems)
-            productTotal.visibility = View.VISIBLE
-        })
     }
 
     private fun getProducts(){
         animationSearch.visibility = View.GONE
-        productViewModel.getProducts(query, page)
+        productViewModel.setProducts(ArrayList())
+        productViewModel.getProducts(query)
     }
 
     @SuppressLint("PrivateResource")
@@ -119,25 +92,21 @@ class ProductsActivity : BaseActivity() {
         searchView.queryHint = getString(R.string.search_menu_title)
 
         productViewModel.getQuery().observe(this, Observer { query ->
+            this.query = query
             searchView.setQuery(query, false)
             if(!query.isNullOrEmpty()) searchView.isIconified = false
         })
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
             override fun onQueryTextChange(newText: String): Boolean {
                 productViewModel.setQuery(newText)
-                return true
+                return false
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                products.clear()
-                productViewModel.setProducts(products)
-                page = 0
-                productAdapter.notifyDataSetChanged()
                 this@ProductsActivity.query = query
                 getProducts()
-                return true
+                return false
             }
         })
 

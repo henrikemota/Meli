@@ -1,8 +1,11 @@
 package br.com.hkmobi.mercadolivre.view.detailProduct
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import com.google.android.material.snackbar.Snackbar
 import br.com.hkmobi.mercadolivre.R
 import br.com.hkmobi.mercadolivre.model.Product

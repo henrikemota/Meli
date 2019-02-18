@@ -5,4 +5,4 @@ import br.com.hkmobi.mercadolivre.model.Product
 import java.io.Serializable
 
 class ResponseProduct(val paging: Paging,
-                      val results: List<Product>): Serializable
+                      val results: ArrayList<Product>): Serializable
