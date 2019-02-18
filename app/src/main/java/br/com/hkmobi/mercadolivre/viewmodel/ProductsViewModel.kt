@@ -25,6 +25,10 @@ class ProductsViewModel: ViewModel() {
         return mutableLiveDataProducts
     }
 
+    fun setProducts(products: List<Product>){
+        mutableLiveDataProducts.postValue(products)
+    }
+
     fun error(): LiveData<String> {
         return mutableLiveDataProductsError
     }
@@ -63,7 +67,7 @@ class ProductsViewModel: ViewModel() {
 
                 override fun onSuccess(response: ResponseProduct) {
                     mutableLiveDataProductsProgress.postValue(false)
-                    mutableLiveDataProducts.postValue(response.results)
+                    setProducts(response.results)
                     if(!response.results.isNullOrEmpty()){
                         mutableLiveDataCountProducts.postValue(response.paging.total)
                     }else{

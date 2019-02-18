@@ -60,8 +60,10 @@ class ProductsActivity : BaseActivity() {
                 totalItemCount = layoutManager.itemCount
                 lastVisibleItem = layoutManager.findLastVisibleItemPosition()
                 if (!loading && totalItemCount <= lastVisibleItem + 1 && totalItemCount < totalItems) {
-                    if(page != 0)getProducts()
-                    loading = true
+                    if(page != 0){
+                        getProducts()
+                        loading = true
+                    }
                 }
             }
         })
@@ -130,11 +132,12 @@ class ProductsActivity : BaseActivity() {
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 products.clear()
+                productViewModel.setProducts(products)
                 page = 0
                 productAdapter.notifyDataSetChanged()
                 this@ProductsActivity.query = query
                 getProducts()
-                return false
+                return true
             }
         })
 
