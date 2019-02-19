@@ -19,7 +19,7 @@ class ServiceGenerator {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl("https://api.mercadolibre.com/")
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)

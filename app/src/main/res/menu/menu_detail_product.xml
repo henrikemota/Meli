@@ -1,9 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context="br.com.hkmobi.mercadolivre.view.detailProduct.DetailProductActivity">
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:id="@+id/action_favorite"
+            android:icon="@drawable/ic_favorite"
+            android:title="@string/hint_search_products"
+            app:showAsAction="ifRoom" />
+
+    <item
+            android:id="@+id/action_share"
+            android:icon="@drawable/ic_share"
+            android:title="@string/hint_search_products"
+            app:showAsAction="ifRoom" />
+
 </menu>

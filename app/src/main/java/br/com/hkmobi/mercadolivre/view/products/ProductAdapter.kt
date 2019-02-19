@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.hkmobi.mercadolivre.R
 import br.com.hkmobi.mercadolivre.model.Product
 import br.com.hkmobi.mercadolivre.view.detailProduct.DetailProductActivity
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_product.view.*
 
 
@@ -30,12 +29,16 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
     @SuppressLint("StringFormatMatches")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val product = products[position]
-        holder.titleProduct.text = product.title
-        if(product.thumbnail.isNotEmpty()) Picasso.get().load(product.thumbnail).into(holder.imageProduct)
-        holder.evaluation.rating = product.reviews.rating_average.toFloat()
-        holder.evaluationTotal.text = context.getString(R.string.msg_evaluation, product.reviews.total)
-        holder.productPrice.text = product.priceFormatted(product.price)
-        holder.productInstallment.text = context.getString(R.string.msg_installment, product.installments.quantity, product.priceFormatted(product.installments.amount))
+        holder.titleProduct.text = product.titleFormatted()
+        if(product.containsImage()) holder.imageProduct.setImageURI(product.urlFormatted())
+        holder.evaluation.rating = product.ratingAverage()
+        holder.evaluationTotal.text = context.getString(R.string.msg_evaluation, product.reviewTotal())
+        holder.productPrice.text = product.priceFormatted()
+
+        if(product.containsInstallments()){
+            holder.productInstallment.visibility = View.VISIBLE
+            holder.productInstallment.text = context.getString(R.string.msg_installment, product.installments!!.quantity.toString(), product.priceAmountFormatted())
+        }
 
         holder.itemView.setOnClickListener { DetailProductActivity()
             .startActivity(context, product) }

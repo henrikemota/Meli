@@ -1,12 +1,14 @@
 package br.com.hkmobi.mercadolivre.view.products
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import br.com.hkmobi.mercadolivre.R
-import br.com.hkmobi.mercadolivre.utils.BaseActivity
 import br.com.hkmobi.mercadolivre.viewmodel.ProductsViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,19 +17,20 @@ import br.com.hkmobi.mercadolivre.model.Product
 import br.com.hkmobi.mercadolivre.utils.ViewHelper
 import kotlinx.android.synthetic.main.activity_products.*
 import androidx.recyclerview.widget.DividerItemDecoration
+import kotlinx.android.synthetic.main.content_list_empty.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ProductsActivity : BaseActivity() {
+class ProductsActivity : AppCompatActivity() {
 
     val productViewModel: ProductsViewModel by viewModel()
 
-    lateinit var searchView: SearchView
+    private lateinit var searchView: SearchView
 
-    lateinit var products: ArrayList<Product>
-    lateinit var productAdapter: ProductAdapter
-    lateinit var layoutManager: LinearLayoutManager
+    private lateinit var products: ArrayList<Product>
+    private lateinit var productAdapter: ProductAdapter
+    private lateinit var layoutManager: LinearLayoutManager
 
-    var query = ""
+    private var query = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +52,8 @@ class ProductsActivity : BaseActivity() {
 
     private fun setListener(){
         swipeRefreshLayout.setOnRefreshListener {
-            getProducts()
+            if(query.isEmpty()) productViewModel.setProducts(ArrayList())
+            else getProducts()
         }
 
         animationSearch.setOnClickListener { searchView.isIconified = false }
@@ -59,27 +63,41 @@ class ProductsActivity : BaseActivity() {
     private fun setValues() {
         productViewModel.getProducts().observe(this, Observer { products ->
             this.products.clear()
-            this.products.addAll(products)
-            productAdapter.notifyDataSetChanged()
-            animationSearch.cancelAnimation()
             animationSearch.visibility = View.GONE
-            animationError.visibility = View.GONE
             swipeRefreshLayout.isRefreshing = false
+            if(products.isEmpty()){
+                setProductsEmpty()
+            }else{
+                setProducts(products)
+            }
         })
 
         productViewModel.error().observe(this, Observer {
             animationError.visibility = View.VISIBLE
-            animationSearch.visibility = View.GONE
             swipeRefreshLayout.isRefreshing = false
         })
 
         productViewModel.statusProgress().observe(this, Observer { status ->
             progressBar.visibility = ViewHelper().show(status)
         })
+
+    }
+
+    private fun setProducts(products: ArrayList<Product>){
+        this.products.addAll(products)
+        productAdapter.notifyDataSetChanged()
+    }
+
+    private fun setProductsEmpty(){
+        productAdapter.notifyDataSetChanged()
+        contentEmpty.visibility = View.VISIBLE
+        msgEmpty.text = getString(R.string.msg_search_empty, query)
     }
 
     private fun getProducts(){
         animationSearch.visibility = View.GONE
+        contentEmpty.visibility = View.GONE
+        animationError.visibility = View.GONE
         productViewModel.getProducts(query)
     }
 
@@ -109,5 +127,10 @@ class ProductsActivity : BaseActivity() {
         })
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    fun startActivity(context: Context){
+        val intent = Intent(context, ProductsActivity::class.java)
+        context.startActivity(intent)
     }
 }

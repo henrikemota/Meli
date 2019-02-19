@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import br.com.hkmobi.mercadolivre.model.Product
 import androidx.lifecycle.LiveData
 import br.com.hkmobi.mercadolivre.model.response.ResponseProduct
-import br.com.hkmobi.mercadolivre.utils.Constants
 import br.com.hkmobi.mercadolivre.utils.MeliInterface
 import br.com.hkmobi.mercadolivre.utils.ServiceGenerator
 import io.reactivex.SingleObserver
@@ -63,7 +62,6 @@ class ProductsViewModel: ViewModel() {
                 override fun onSuccess(response: ResponseProduct) {
                     mutableLiveDataProductsProgress.postValue(false)
                     setProducts(response.results)
-
                 }
             })
     }
