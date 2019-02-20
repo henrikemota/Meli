@@ -30,6 +30,7 @@ class ProductsActivity : AppCompatActivity() {
     private lateinit var layoutManager: LinearLayoutManager
 
     private var query = ""
+    private var containsError = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +52,7 @@ class ProductsActivity : AppCompatActivity() {
 
     private fun setListener(){
         swipeRefreshLayout.setOnRefreshListener {
-            if(query.isEmpty()) productViewModel.setProducts(ArrayList())
-            else getProducts()
+            getProducts()
         }
 
         animationSearch.setOnClickListener { searchView.isIconified = false }
@@ -60,24 +60,31 @@ class ProductsActivity : AppCompatActivity() {
 
     @SuppressLint("StringFormatMatches")
     private fun setValues() {
+        productViewModel.error().observe(this, Observer {
+            animationError.visibility = View.VISIBLE
+            animationSearch.visibility = View.GONE
+            animationEmpty.visibility = View.GONE
+            swipeRefreshLayout.isRefreshing = false
+            containsError = true
+        })
+
+        productViewModel.statusProgress().observe(this, Observer { status ->
+            progressBar.visibility = status
+            animationError.visibility = View.GONE
+            animationSearch.visibility = View.GONE
+            animationEmpty.visibility = View.GONE
+        })
+
         productViewModel.getProducts().observe(this, Observer { products ->
             this.products.clear()
             animationSearch.visibility = View.GONE
             swipeRefreshLayout.isRefreshing = false
+            containsError = false
             if(products.isEmpty()){
                 setProductsEmpty()
             }else{
                 setProducts(products)
             }
-        })
-
-        productViewModel.error().observe(this, Observer {
-            animationError.visibility = View.VISIBLE
-            swipeRefreshLayout.isRefreshing = false
-        })
-
-        productViewModel.statusProgress().observe(this, Observer { status ->
-            progressBar.visibility = status
         })
 
     }
@@ -89,15 +96,24 @@ class ProductsActivity : AppCompatActivity() {
 
     private fun setProductsEmpty(){
         productAdapter.notifyDataSetChanged()
-        contentEmpty.visibility = View.VISIBLE
+        if(containsError) contentEmpty.visibility = View.VISIBLE
         msgEmpty.text = getString(R.string.msg_search_empty, query)
     }
 
     private fun getProducts(){
-        animationSearch.visibility = View.GONE
-        contentEmpty.visibility = View.GONE
-        animationError.visibility = View.GONE
-        productViewModel.products(query)
+        if(query.isEmpty()) {
+            products.clear()
+            productAdapter.notifyDataSetChanged()
+            swipeRefreshLayout.isRefreshing = false
+            animationSearch.visibility = View.VISIBLE
+            contentEmpty.visibility = View.GONE
+            animationError.visibility = View.GONE
+        } else {
+            animationSearch.visibility = View.GONE
+            contentEmpty.visibility = View.GONE
+            animationError.visibility = View.GONE
+            productViewModel.products(query)
+        }
     }
 
     @SuppressLint("PrivateResource")

@@ -14,12 +14,17 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 
-class DetailProductViewModel(val repo: DetailProductRepository) : ViewModel(){
+class DetailProductViewModel(private val repo: DetailProductRepository) : ViewModel(){
 
     private val mutableLiveProduct = MutableLiveData<Product>()
+    private val mutableLiveError = MutableLiveData<String>()
 
     fun getProduct(): LiveData<Product> {
         return mutableLiveProduct
+    }
+
+    fun error(): LiveData<String> {
+        return mutableLiveError
     }
 
     private fun setProduct(product: Product){
@@ -37,7 +42,7 @@ class DetailProductViewModel(val repo: DetailProductRepository) : ViewModel(){
             }
 
             override fun onError(e: Throwable) {
-
+                mutableLiveError.value = e.message
             }
         })
     }

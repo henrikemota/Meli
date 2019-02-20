@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ShareActionProvider
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
@@ -22,7 +21,7 @@ import kotlinx.android.synthetic.main.content_detail_product.*
 import kotlinx.android.synthetic.main.content_installment.*
 import kotlinx.android.synthetic.main.content_slider.*
 import org.koin.android.viewmodel.ext.android.viewModel
-
+import androidx.appcompat.app.AlertDialog
 
 
 class DetailProductActivity : AppCompatActivity() {
@@ -66,7 +65,19 @@ class DetailProductActivity : AppCompatActivity() {
                 productInstallment.text = getString(R.string.msg_installment, product.installments!!.quantity.toString(), product.priceAmountFormatted())
             }
 
-            if(product.pictures != null) viewPager.adapter = ImageAdapter(this, product.pictures!!)
+            if(product.pictures != null){
+                viewPager.adapter = ImageAdapter(this, product.pictures!!)
+                qtdPictures.text = getString(R.string.label_qtd_pictures, product.pictures!!.size.toString())
+            }
+        })
+
+        detailProductViewModel.error().observe(this, Observer { error ->
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.label_conection))
+                .setMessage(getString(R.string.label_conection_2))
+                .setPositiveButton(getString(R.string.label_ok)) { dialog, id ->
+                    finish()
+                }.show()
         })
     }
 

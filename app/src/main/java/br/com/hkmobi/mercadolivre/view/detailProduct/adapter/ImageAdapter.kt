@@ -3,6 +3,7 @@ package br.com.hkmobi.mercadolivre.view.detailproduct.adapter
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import br.com.hkmobi.mercadolivre.data.model.Picture
 import com.facebook.drawee.view.SimpleDraweeView
@@ -20,6 +21,7 @@ class ImageAdapter(val context: Context, private val images: ArrayList<Picture>)
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val imageView = SimpleDraweeView(context)
         imageView.setImageURI(images[position].secure_url)
+        imageView.scaleType = ImageView.ScaleType.CENTER
         container.addView(imageView)
         return imageView
     }
