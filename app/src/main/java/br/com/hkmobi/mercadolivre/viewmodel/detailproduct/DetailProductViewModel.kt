@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import br.com.hkmobi.mercadolivre.data.model.Product
 import br.com.hkmobi.mercadolivre.data.service.MeliInterface
 import br.com.hkmobi.mercadolivre.data.service.ServiceGenerator
+import br.com.hkmobi.mercadolivre.repository.detailproduct.DetailProductRepository
 import io.reactivex.Observable
+import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 
-class DetailProductViewModel : ViewModel(){
+class DetailProductViewModel(val repo: DetailProductRepository) : ViewModel(){
 
     private val mutableLiveProduct = MutableLiveData<Product>()
 
@@ -24,27 +27,20 @@ class DetailProductViewModel : ViewModel(){
     }
 
     fun zipDetailsDescription(product: Product){
-        Observable.zip(getProductDetails(product.id!!), getProductDescription(product.id),
-            BiFunction<Product, Product, Any> { details, description ->
-                product.plain_text = description.plain_text
-                product.pictures = details.pictures
+        repo.getDetailsDescription(product).subscribe(object : SingleObserver<Product>{
+            override fun onSuccess(product: Product) {
                 setProduct(product)
-            }).subscribe()
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+        })
     }
 
-    private fun getProductDetails(id: String) : Observable<Product> {
-        return ServiceGenerator
-            .createService(MeliInterface::class.java)
-            .getProductDetails(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
 
-    private fun getProductDescription(id: String): Observable<Product> {
-        return ServiceGenerator
-            .createService(MeliInterface::class.java)
-            .getProductDescription(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
 }

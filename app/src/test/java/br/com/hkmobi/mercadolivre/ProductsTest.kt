@@ -159,7 +159,7 @@ class ProductsTest {
     @Test
     fun containsInstallmentsIsEmptyTest() {
         val product = ProductFactory.productIsEmpty()
-        assertEquals(false, product.containsInstallments())
+        assertEquals(true, product.containsInstallments())
     }
 
     @Test

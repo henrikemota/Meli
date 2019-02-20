@@ -14,8 +14,8 @@ interface MeliInterface {
     fun  getProducts(@Query("q") query: String): Single<ProductResponse>
 
     @GET("items/{id}/description")
-    fun  getProductDescription(@Path("id") id: String): Observable<Product>
+    fun  getProductDescription(@Path("id") id: String): Single<Product>
 
     @GET("items/{id}")
-    fun  getProductDetails(@Path("id") id: String): Observable<Product>
+    fun  getProductDetails(@Path("id") id: String): Single<Product>
 }

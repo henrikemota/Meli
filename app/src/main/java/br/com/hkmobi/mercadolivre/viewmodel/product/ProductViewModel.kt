@@ -1,22 +1,20 @@
 package br.com.hkmobi.mercadolivre.viewmodel.product
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import br.com.hkmobi.mercadolivre.data.model.Product
 import androidx.lifecycle.LiveData
 import br.com.hkmobi.mercadolivre.data.model.response.ProductResponse
-import br.com.hkmobi.mercadolivre.data.service.MeliInterface
-import br.com.hkmobi.mercadolivre.data.service.ServiceGenerator
+import br.com.hkmobi.mercadolivre.repository.product.ProductRepository
 import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
-class ProductViewModel: ViewModel() {
+class ProductViewModel(val repo : ProductRepository): ViewModel() {
 
     private val mutableLiveDataProducts = MutableLiveData<ArrayList<Product>>()
     private val mutableLiveDataProductsError = MutableLiveData<String>()
-    private val mutableLiveDataProductsProgress = MutableLiveData<Boolean>()
+    private val mutableLiveDataProductsProgress = MutableLiveData<Int>()
     private val mutableLiveDataQuery = MutableLiveData<String>()
 
     fun getProducts(): LiveData<ArrayList<Product>> {
@@ -31,7 +29,7 @@ class ProductViewModel: ViewModel() {
         return mutableLiveDataProductsError
     }
 
-    fun statusProgress(): LiveData<Boolean> {
+    fun statusProgress(): LiveData<Int> {
         return mutableLiveDataProductsProgress
     }
 
@@ -43,26 +41,21 @@ class ProductViewModel: ViewModel() {
         return mutableLiveDataQuery.postValue(query)
     }
 
-    fun getProducts(query: String){
-        ServiceGenerator
-            .createService(MeliInterface::class.java)
-            .getProducts(query)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<ProductResponse> {
-                override fun onSubscribe(d: Disposable) {
-                    mutableLiveDataProductsProgress.postValue(true)
-                }
+    fun products(query: String){
+        repo.getProductsService(query).subscribe(object : SingleObserver<ProductResponse> {
+            override fun onSubscribe(d: Disposable) {
+                mutableLiveDataProductsProgress.postValue(View.VISIBLE)
+            }
 
-                override fun onError(error: Throwable) {
-                    mutableLiveDataProductsProgress.postValue(false)
-                    mutableLiveDataProductsError.postValue(error.message)
-                }
+            override fun onSuccess(response: ProductResponse) {
+                mutableLiveDataProductsProgress.postValue(View.GONE)
+                setProducts(response.results)
+            }
 
-                override fun onSuccess(response: ProductResponse) {
-                    mutableLiveDataProductsProgress.postValue(false)
-                    setProducts(response.results)
-                }
-            })
+            override fun onError(error: Throwable) {
+                mutableLiveDataProductsProgress.postValue(View.GONE)
+                mutableLiveDataProductsError.postValue(error.message)
+            }
+        })
     }
 }

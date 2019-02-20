@@ -4,13 +4,13 @@
     <item
             android:id="@+id/action_favorite"
             android:icon="@drawable/ic_favorite"
-            android:title="@string/hint_search_products"
+            android:title="@string/label_favorite"
             app:showAsAction="ifRoom" />
 
     <item
             android:id="@+id/action_share"
             android:icon="@drawable/ic_share"
-            android:title="@string/hint_search_products"
+            android:title="@string/label_share"
             app:showAsAction="ifRoom" />
 
 </menu>

@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.hkmobi.mercadolivre.data.model.Product
-import br.com.hkmobi.mercadolivre.util.ViewHelper
 import kotlinx.android.synthetic.main.activity_products.*
 import androidx.recyclerview.widget.DividerItemDecoration
 import kotlinx.android.synthetic.main.content_list_empty.*
@@ -78,7 +77,7 @@ class ProductsActivity : AppCompatActivity() {
         })
 
         productViewModel.statusProgress().observe(this, Observer { status ->
-            progressBar.visibility = ViewHelper().show(status)
+            progressBar.visibility = status
         })
 
     }
@@ -98,7 +97,7 @@ class ProductsActivity : AppCompatActivity() {
         animationSearch.visibility = View.GONE
         contentEmpty.visibility = View.GONE
         animationError.visibility = View.GONE
-        productViewModel.getProducts(query)
+        productViewModel.products(query)
     }
 
     @SuppressLint("PrivateResource")

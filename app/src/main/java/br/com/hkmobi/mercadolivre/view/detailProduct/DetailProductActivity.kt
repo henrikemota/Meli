@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ShareActionProvider
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.content_detail_product.*
 import kotlinx.android.synthetic.main.content_installment.*
 import kotlinx.android.synthetic.main.content_slider.*
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 
 class DetailProductActivity : AppCompatActivity() {
