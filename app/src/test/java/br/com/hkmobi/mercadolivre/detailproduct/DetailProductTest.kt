@@ -1,5 +1,6 @@
-package br.com.hkmobi.mercadolivre
+package br.com.hkmobi.mercadolivre.detailproduct
 
+import br.com.hkmobi.mercadolivre.ProductFactory
 import org.junit.Test
 
 import org.junit.Assert.*
