@@ -1,4 +1,4 @@
-package br.com.hkmobi.mercadolivre.utils
+package br.com.hkmobi.mercadolivre.util
 
 import android.view.View
 

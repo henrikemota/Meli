@@ -1,4 +1,4 @@
-package br.com.hkmobi.mercadolivre.utils
+package br.com.hkmobi.mercadolivre.data.service
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

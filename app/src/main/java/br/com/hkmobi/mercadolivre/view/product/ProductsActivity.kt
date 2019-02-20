@@ -1,4 +1,4 @@
-package br.com.hkmobi.mercadolivre.view.products
+package br.com.hkmobi.mercadolivre.view.product
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,12 +9,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import br.com.hkmobi.mercadolivre.R
-import br.com.hkmobi.mercadolivre.viewmodel.ProductsViewModel
+import br.com.hkmobi.mercadolivre.viewmodel.product.ProductViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.hkmobi.mercadolivre.model.Product
-import br.com.hkmobi.mercadolivre.utils.ViewHelper
+import br.com.hkmobi.mercadolivre.data.model.Product
+import br.com.hkmobi.mercadolivre.util.ViewHelper
 import kotlinx.android.synthetic.main.activity_products.*
 import androidx.recyclerview.widget.DividerItemDecoration
 import kotlinx.android.synthetic.main.content_list_empty.*
@@ -22,7 +22,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class ProductsActivity : AppCompatActivity() {
 
-    val productViewModel: ProductsViewModel by viewModel()
+    val productViewModel: ProductViewModel by viewModel()
 
     private lateinit var searchView: SearchView
 

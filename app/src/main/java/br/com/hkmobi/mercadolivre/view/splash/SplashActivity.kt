@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import br.com.hkmobi.mercadolivre.R
-import br.com.hkmobi.mercadolivre.view.products.ProductsActivity
+import br.com.hkmobi.mercadolivre.view.product.ProductsActivity
 
 class SplashActivity : AppCompatActivity() {
 

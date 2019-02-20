@@ -6,12 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".view.detailProduct.DetailProductActivity">
+        tools:context=".view.detailproduct.DetailProductActivity">
 
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:fitsSystemWindows="true"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             android:layout_width="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -21,8 +21,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:toolbarId="@+id/toolbar"
+                app:titleEnabled="false"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="?attr/colorPrimary">
+
+            <include layout="@layout/content_slider"/>
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"

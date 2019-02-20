@@ -1,18 +1,18 @@
-package br.com.hkmobi.mercadolivre.viewmodel
+package br.com.hkmobi.mercadolivre.viewmodel.product
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
-import br.com.hkmobi.mercadolivre.model.Product
+import br.com.hkmobi.mercadolivre.data.model.Product
 import androidx.lifecycle.LiveData
-import br.com.hkmobi.mercadolivre.model.response.ResponseProduct
-import br.com.hkmobi.mercadolivre.utils.MeliInterface
-import br.com.hkmobi.mercadolivre.utils.ServiceGenerator
+import br.com.hkmobi.mercadolivre.data.model.response.ProductResponse
+import br.com.hkmobi.mercadolivre.data.service.MeliInterface
+import br.com.hkmobi.mercadolivre.data.service.ServiceGenerator
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class ProductsViewModel: ViewModel() {
+class ProductViewModel: ViewModel() {
 
     private val mutableLiveDataProducts = MutableLiveData<ArrayList<Product>>()
     private val mutableLiveDataProductsError = MutableLiveData<String>()
@@ -49,7 +49,7 @@ class ProductsViewModel: ViewModel() {
             .getProducts(query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<ResponseProduct> {
+            .subscribe(object : SingleObserver<ProductResponse> {
                 override fun onSubscribe(d: Disposable) {
                     mutableLiveDataProductsProgress.postValue(true)
                 }
@@ -59,7 +59,7 @@ class ProductsViewModel: ViewModel() {
                     mutableLiveDataProductsError.postValue(error.message)
                 }
 
-                override fun onSuccess(response: ResponseProduct) {
+                override fun onSuccess(response: ProductResponse) {
                     mutableLiveDataProductsProgress.postValue(false)
                     setProducts(response.results)
                 }

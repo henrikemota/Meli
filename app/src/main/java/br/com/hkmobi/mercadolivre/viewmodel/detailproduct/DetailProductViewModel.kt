@@ -1,11 +1,11 @@
-package br.com.hkmobi.mercadolivre.viewmodel
+package br.com.hkmobi.mercadolivre.viewmodel.detailproduct
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.hkmobi.mercadolivre.model.Product
-import br.com.hkmobi.mercadolivre.utils.MeliInterface
-import br.com.hkmobi.mercadolivre.utils.ServiceGenerator
+import br.com.hkmobi.mercadolivre.data.model.Product
+import br.com.hkmobi.mercadolivre.data.service.MeliInterface
+import br.com.hkmobi.mercadolivre.data.service.ServiceGenerator
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction

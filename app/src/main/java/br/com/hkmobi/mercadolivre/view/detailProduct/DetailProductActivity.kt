@@ -1,4 +1,4 @@
-package br.com.hkmobi.mercadolivre.view.detailProduct
+package br.com.hkmobi.mercadolivre.view.detailproduct
 
 
 import android.content.Context
@@ -11,10 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import br.com.hkmobi.mercadolivre.R
-import br.com.hkmobi.mercadolivre.model.Product
-import br.com.hkmobi.mercadolivre.viewmodel.DetailProductViewModel
+import br.com.hkmobi.mercadolivre.data.model.Product
+import br.com.hkmobi.mercadolivre.view.description.DescriptionActivity
+import br.com.hkmobi.mercadolivre.view.detailproduct.adapter.ImageAdapter
+import br.com.hkmobi.mercadolivre.viewmodel.detailproduct.DetailProductViewModel
 import kotlinx.android.synthetic.main.activity_detail_product.*
+import kotlinx.android.synthetic.main.content_description.*
 import kotlinx.android.synthetic.main.content_detail_product.*
+import kotlinx.android.synthetic.main.content_installment.*
+import kotlinx.android.synthetic.main.content_slider.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -26,13 +31,12 @@ class DetailProductActivity : AppCompatActivity() {
 
     companion object {
         const val PRODUCT = "br.com.hkmobi.mercadolivre.view.detailProduct.DetailProductActivity.PRODUCT"
-    }
 
-    fun startActivity(context: Context, product: Product){
-        val intent = Intent(context, DetailProductActivity::class.java)
-        intent.putExtra(PRODUCT, product)
-        context.startActivity(intent)
-
+        fun startActivity(context: Context, product: Product){
+            val intent = Intent(context, DetailProductActivity::class.java)
+            intent.putExtra(PRODUCT, product)
+            context.startActivity(intent)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +57,14 @@ class DetailProductActivity : AppCompatActivity() {
         detailProductViewModel.getProduct().observe(this, Observer { product ->
             titleProduct.text = product.titleFormatted()
             priceProduct.text = product.priceFormatted()
-            plainText.text = product.plainTextFormmated()
+            descriptionProduct.text = product.plainTextFormmated()
+
+            if(product.containsInstallments()) {
+                productInstallment.visibility = View.VISIBLE
+                productInstallment.text = getString(R.string.msg_installment, product.installments!!.quantity.toString(), product.priceAmountFormatted())
+            }
+
+            if(product.pictures != null) viewPager.adapter = ImageAdapter(this, product.pictures!!)
         })
     }
 
@@ -65,6 +76,8 @@ class DetailProductActivity : AppCompatActivity() {
         buttonBuy.setOnClickListener {
             snackBar(it)
         }
+
+        includeDescription.setOnClickListener { DescriptionActivity.startActivity(this, product.plainTextFormmated()) }
     }
 
     private fun snackBar(view: View){

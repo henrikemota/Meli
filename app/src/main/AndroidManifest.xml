@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-            android:name=".utils.MyApplication"
+            android:name=".MyApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -14,9 +14,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.splash.SplashActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".view.description.DescriptionActivity"
+        android:label="@string/label_description">
+        </activity>
+        <activity
+                android:name=".view.splash.SplashActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -24,11 +28,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".view.detailProduct.DetailProductActivity"
+                android:name=".view.detailproduct.DetailProductActivity"
                 android:label="@string/title_activity_detail_product"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".view.products.ProductsActivity"/>
+        <activity android:name=".view.product.ProductsActivity"/>
     </application>
 
 </manifest>

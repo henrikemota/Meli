@@ -1,4 +1,4 @@
-package br.com.hkmobi.mercadolivre.model
+package br.com.hkmobi.mercadolivre.data.model
 
 import java.io.Serializable
 import java.text.NumberFormat

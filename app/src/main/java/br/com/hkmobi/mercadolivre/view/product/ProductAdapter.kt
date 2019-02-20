@@ -1,4 +1,4 @@
-package br.com.hkmobi.mercadolivre.view.products
+package br.com.hkmobi.mercadolivre.view.product
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.hkmobi.mercadolivre.R
-import br.com.hkmobi.mercadolivre.model.Product
-import br.com.hkmobi.mercadolivre.view.detailProduct.DetailProductActivity
+import br.com.hkmobi.mercadolivre.data.model.Product
+import br.com.hkmobi.mercadolivre.view.detailproduct.DetailProductActivity
 import kotlinx.android.synthetic.main.item_product.view.*
 
 
@@ -40,7 +40,7 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
             holder.productInstallment.text = context.getString(R.string.msg_installment, product.installments!!.quantity.toString(), product.priceAmountFormatted())
         }
 
-        holder.itemView.setOnClickListener { DetailProductActivity()
+        holder.itemView.setOnClickListener { DetailProductActivity
             .startActivity(context, product) }
     }
 

@@ -1,8 +1,8 @@
 package br.com.hkmobi.mercadolivre
 
-import br.com.hkmobi.mercadolivre.model.Installment
-import br.com.hkmobi.mercadolivre.model.Product
-import br.com.hkmobi.mercadolivre.model.Review
+import br.com.hkmobi.mercadolivre.data.model.Installment
+import br.com.hkmobi.mercadolivre.data.model.Product
+import br.com.hkmobi.mercadolivre.data.model.Review
 
 class ProductFactory {
 
