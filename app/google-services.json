@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "759552003911",
+    "firebase_url": "https://meli-c6f36.firebaseio.com",
+    "project_id": "meli-c6f36",
+    "storage_bucket": "meli-c6f36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759552003911:android:dc2f400343d13ec2",
+        "android_client_info": {
+          "package_name": "br.com.hkmobi.mercadolivre"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759552003911-lo0u0gde495plv09v1cpu9sl05oqeovf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.hkmobi.mercadolivre",
+            "certificate_hash": "6a0d6429fe14627b107cf2da37ad89175a26103a"
+          }
+        },
+        {
+          "client_id": "759552003911-bp6aqc5ivo1lvr8k6kkskes3f8ijen4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDhtN24RdLFNmQG6l44Q5rd60iRu1CLp8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759552003911-bp6aqc5ivo1lvr8k6kkskes3f8ijen4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
