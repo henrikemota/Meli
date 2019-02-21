@@ -83,18 +83,20 @@ class DetailProductActivity : AppCompatActivity() {
 
     private fun setListeners(){
         fab.setOnClickListener {
-            snackBar(it)
+            snackBar(it, getString(R.string.label_add_car))
         }
 
         buttonBuy.setOnClickListener {
-            snackBar(it)
+            snackBar(it, getString(R.string.label_add_car))
         }
 
-        includeDescription.setOnClickListener { DescriptionActivity.startActivity(this, product.plainTextFormmated()) }
+        includeDescription.setOnClickListener {
+            DescriptionActivity.startActivity(this, product.plainTextFormmated())
+        }
     }
 
-    private fun snackBar(view: View){
-        Snackbar.make(view, "O item foi adicionado no carrinho", Snackbar.LENGTH_LONG).show()
+    private fun snackBar(view: View, msg: String){
+        Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -106,6 +108,15 @@ class DetailProductActivity : AppCompatActivity() {
         return when (item.itemId) {
             android.R.id.home -> {
                 finish()
+                true
+            }
+            R.id.action_favorite -> {
+                snackBar(this.findViewById(R.id.action_favorite), getString(R.string.label_snack_favorite))
+                true
+            }
+
+            R.id.action_share -> {
+                snackBar(this.findViewById(R.id.action_share), getString(R.string.label_snack_share))
                 true
             }
             else -> super.onOptionsItemSelected(item)

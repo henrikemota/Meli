@@ -18,4 +18,7 @@
     <string name="label_conection">Verifique sua conexão</string>
     <string name="label_conection_2">Ocorreu um erro ao tentar acessar os detalhes do produto.</string>
     <string name="label_ok">Ok</string>
+    <string name="label_add_car">O item foi adicionado no carrinho</string>
+    <string name="label_snack_favorite">Produto adicionado nos seus favotiros</string>
+    <string name="label_snack_share">Produto compartilhado</string>
 </resources>
