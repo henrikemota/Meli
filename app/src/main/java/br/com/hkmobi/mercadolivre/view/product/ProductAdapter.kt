@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.hkmobi.mercadolivre.R
 import br.com.hkmobi.mercadolivre.data.model.Product
-import br.com.hkmobi.mercadolivre.view.detailproduct.DetailProductActivity
+import br.com.hkmobi.mercadolivre.view.detailProduct.DetailProductActivity
 import kotlinx.android.synthetic.main.item_product.view.*
 
 

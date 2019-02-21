@@ -1,4 +1,4 @@
-package br.com.hkmobi.mercadolivre.view.detailproduct
+package br.com.hkmobi.mercadolivre.view.detailProduct
 
 
 import android.content.Context
