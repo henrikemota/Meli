@@ -63,7 +63,6 @@ class ProductsActivity : AppCompatActivity() {
         productViewModel.error().observe(this, Observer {
             animationError.visibility = View.VISIBLE
             animationSearch.visibility = View.GONE
-            animationEmpty.visibility = View.GONE
             swipeRefreshLayout.isRefreshing = false
             containsError = true
         })
@@ -72,7 +71,6 @@ class ProductsActivity : AppCompatActivity() {
             progressBar.visibility = status
             animationError.visibility = View.GONE
             animationSearch.visibility = View.GONE
-            animationEmpty.visibility = View.GONE
         })
 
         productViewModel.getProducts().observe(this, Observer { products ->
@@ -96,7 +94,7 @@ class ProductsActivity : AppCompatActivity() {
 
     private fun setProductsEmpty(){
         productAdapter.notifyDataSetChanged()
-        if(containsError) contentEmpty.visibility = View.VISIBLE
+        if(!containsError) contentEmpty.visibility = View.VISIBLE
         msgEmpty.text = getString(R.string.msg_search_empty, query)
     }
 
