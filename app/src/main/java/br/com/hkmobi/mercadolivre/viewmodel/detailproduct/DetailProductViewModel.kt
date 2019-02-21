@@ -4,17 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.hkmobi.mercadolivre.data.model.Product
-import br.com.hkmobi.mercadolivre.data.service.MeliInterface
-import br.com.hkmobi.mercadolivre.data.service.ServiceGenerator
-import br.com.hkmobi.mercadolivre.repository.detailproduct.DetailProductRepository
-import io.reactivex.Observable
+import br.com.hkmobi.mercadolivre.data.repository.ProductRepositoryImpl
 import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.BiFunction
-import io.reactivex.schedulers.Schedulers
 
-class DetailProductViewModel(private val repo: DetailProductRepository) : ViewModel(){
+class DetailProductViewModel(private val repo: ProductRepositoryImpl) : ViewModel(){
 
     private val mutableLiveProduct = MutableLiveData<Product>()
     private val mutableLiveError = MutableLiveData<String>()
@@ -32,7 +26,7 @@ class DetailProductViewModel(private val repo: DetailProductRepository) : ViewMo
     }
 
     fun zipDetailsDescription(product: Product){
-        repo.getDetailsDescription(product).subscribe(object : SingleObserver<Product>{
+        repo.getDetails(product).subscribe(object : SingleObserver<Product>{
             override fun onSuccess(product: Product) {
                 setProduct(product)
             }

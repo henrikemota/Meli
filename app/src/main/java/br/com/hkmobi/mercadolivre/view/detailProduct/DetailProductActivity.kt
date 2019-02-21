@@ -71,7 +71,7 @@ class DetailProductActivity : AppCompatActivity() {
             }
         })
 
-        detailProductViewModel.error().observe(this, Observer { error ->
+        detailProductViewModel.error().observe(this, Observer {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.label_conection))
                 .setMessage(getString(R.string.label_conection_2))

@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import br.com.hkmobi.mercadolivre.data.model.Product
 import androidx.lifecycle.LiveData
 import br.com.hkmobi.mercadolivre.data.model.response.ProductResponse
-import br.com.hkmobi.mercadolivre.repository.product.ProductRepository
+import br.com.hkmobi.mercadolivre.data.repository.ProductRepositoryImpl
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 
-class ProductViewModel(val repo : ProductRepository): ViewModel() {
+class ProductViewModel(private val repo : ProductRepositoryImpl): ViewModel() {
 
     private val mutableLiveDataProducts = MutableLiveData<ArrayList<Product>>()
     private val mutableLiveDataProductsError = MutableLiveData<String>()
@@ -42,7 +42,7 @@ class ProductViewModel(val repo : ProductRepository): ViewModel() {
     }
 
     fun products(query: String){
-        repo.getProductsService(query).subscribe(object : SingleObserver<ProductResponse> {
+        repo.getProducts(query).subscribe(object : SingleObserver<ProductResponse> {
             override fun onSubscribe(d: Disposable) {
                 mutableLiveDataProductsProgress.postValue(View.VISIBLE)
             }

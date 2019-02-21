@@ -13,8 +13,9 @@ class MyApplication : Application(){
         startKoin(this@MyApplication, listOf(appModule))
         Fresco.initialize(this)
 
-        if (BuildConfig.DEBUG){
-            LeakCanary.install(this)
+        when {
+            LeakCanary.isInAnalyzerProcess(this) -> return
+            else -> LeakCanary.install(this)
         }
     }
 }
