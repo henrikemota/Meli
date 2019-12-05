@@ -1,6 +1,6 @@
 jpeg:
-  quality: 50
+  quality: 80
 png:
-  quality: 50
+  quality: 80
 webp:
-  quality: 50
+  quality: 80
